@@ -1,4 +1,3 @@
-import pprint
 import openpyxl
 
 # файлы для работы
@@ -47,12 +46,12 @@ data_from = []
 
 # цикл прохода по разделам (листам) в заполняемом файле
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
-    # print(wb_pm_urp_sheet)
+    print(wb_pm_urp_sheet)
     wb_pm_urp_s = wb_pm_urp[wb_pm_urp_sheet]
 
     # цикл прохода по листам файла источника данных
     for wb_stat_sheet, wb_stat_data in wb_pm_urp_data.items():
-        # print(wb_stat_sheet)
+        print('       ' + wb_stat_sheet)
         # беру лист в фале с данными
         wb_stat_s = wb_stat[wb_stat_sheet]
 
@@ -61,8 +60,9 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         # диапазон ячеек в файл заполнения
         cells_range_to = wb_stat_data[1]
 
+        # собираю информацию в список
         temp_list = []
-        # назначаю диапазон ячеек
+        # назначаю диапазон ячеек в файле источнике
         wb_cells_range_from = wb_stat_s[cells_range_from]
         for row_in_range in wb_cells_range_from:
             for cell_in_row in row_in_range:
@@ -73,6 +73,23 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
             data_from.append(temp_list)
             temp_list = []
 
-            # print()
+        # записываю информацию
+        # назначаю диапазон ячеек
+        wb_cells_range_to = wb_pm_urp[cells_range_to]
+        for row_in_range in wb_cells_range_to:
+            for cell_in_row in row_in_range:
+                print(cell_in_row, end=' = ')
+                indexR = wb_cells_range_to.index(row_in_range)
+                indexC = row_in_range.index(cell_in_row)
+                print(wb_cells_range_to[indexR][indexC].value)
 
-print(*data_from, sep='\n')
+
+
+# print(*data_from, sep='\n')
+
+# # закрываю файл из которого беру данные
+wb_stat.close()
+#
+# # сохраняю файл шаблона и закрываю его
+# wb_pm_urp.save(file_pm_urp)
+wb_pm_urp.close()
