@@ -1,12 +1,15 @@
 import openpyxl
 
 # файлы для работы
+# файл из статистики с данными
 file_stat = 'ПМ-09-2022-УРП.xlsx'
+# файл для заполнения
 file_pm_urp = 'Таблицы_ПМ_УРП (Разделы 2 и 3).xlsx'
 
-# словарь для хранения источника и
+# словарь для хранения раздел куда вставляются данные
+# лист откуда берутся данные и с каких ячеек, а потом куда кладутся
 dict_data = {
-             'Раздел2': {
+             'Раздел2': {  #    откуда      куда
                          '7': ['B60:S60', 'B9:S9'],
                          '8': ['B60:S60', 'B10:S10'],
                          '9': ['B60:S60', 'B11:S11'],
@@ -33,12 +36,39 @@ dict_data = {
                         }
             }
 
+# открываю файлы
+# файл с данными
 wb_stat = openpyxl.load_workbook(file_stat)
+# заполняемый файл
 wb_pm_urp = openpyxl.load_workbook(file_pm_urp)
 
+# цикл прохода по разделам (листам) в заполняемом файле
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
-    # print(wb_pm_urp_sheet, wb_pm_urp_data, sep='\n')
+    # print(wb_pm_urp_sheet)
     wb_pm_urp_s = wb_pm_urp[wb_pm_urp_sheet]
 
+    # цикл прохода по листам файла источника данных
     for wb_stat_sheet, wb_stat_data in wb_pm_urp_data.items():
-        print(wb_stat_sheet, wb_stat_data)
+        # print(wb_stat_sheet)
+        wb_stat_s = wb_stat[wb_stat_sheet]
+
+        # диапазон ячеек из файла статистики
+        cells_range_from = wb_stat_data[0]
+        # диапазон ячеек в файл заполнения
+        cells_range_to = wb_stat_data[1]
+
+        wb_cells_range = wb_stat_s[cells_range_from]
+        for row_in_range in wb_cells_range:
+            for cell_in_row in row_in_range:
+                indexR = wb_cells_range.index(row_in_range)
+                indexC = row_in_range.index(cell_in_row)
+                print(wb_cells_range[indexR][indexC].value)
+
+            print()
+
+        print()
+
+        # print(wb_stat_data, type(wb_stat_data))
+        # print(cells_range_from, type(cells_range_from))
+        # print(cells_range_to, type(cells_range_to))
+        # print()
