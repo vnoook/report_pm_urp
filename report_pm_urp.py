@@ -1,3 +1,4 @@
+import pprint
 import openpyxl
 
 # файлы для работы
@@ -60,28 +61,18 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         # диапазон ячеек в файл заполнения
         cells_range_to = wb_stat_data[1]
 
+        temp_list = []
         # назначаю диапазон ячеек
         wb_cells_range_from = wb_stat_s[cells_range_from]
         for row_in_range in wb_cells_range_from:
             for cell_in_row in row_in_range:
-                print(cell_in_row)
+                # print(cell_in_row)
                 indexR = wb_cells_range_from.index(row_in_range)
                 indexC = row_in_range.index(cell_in_row)
-                data_from.append(wb_cells_range_from[indexR][indexC].value)
+                temp_list.append(wb_cells_range_from[indexR][indexC].value)
+            data_from.append(temp_list)
+            temp_list = []
 
-            print()
+            # print()
 
-        print()
-
-        # list1 = []
-        # list2 = []
-        # for i in range(5):
-        #     for j in range(3):
-        #         list2.append(i)
-        #     list1.append(list2)
-        #     list2 = []
-
-        # print(wb_stat_data, type(wb_stat_data))
-        # print(cells_range_from, type(cells_range_from))
-        # print(cells_range_to, type(cells_range_to))
-        # print()
+print(*data_from, sep='\n')
