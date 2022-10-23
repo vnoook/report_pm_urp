@@ -75,7 +75,8 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
 
         # записываю информацию
         # назначаю диапазон ячеек
-        wb_cells_range_to = wb_pm_urp[cells_range_to]
+        wb_cells_range_to = wb_pm_urp_s[cells_range_to]
+        # print(wb_cells_range_to)
         for row_in_range in wb_cells_range_to:
             for cell_in_row in row_in_range:
                 print(cell_in_row, end=' = ')
@@ -88,8 +89,11 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
 # print(*data_from, sep='\n')
 
 # # закрываю файл из которого беру данные
-wb_stat.close()
+# wb_stat.close()
 #
 # # сохраняю файл шаблона и закрываю его
 # wb_pm_urp.save(file_pm_urp)
-wb_pm_urp.close()
+# wb_pm_urp.close()
+
+# # закрываю программу
+# input('Нажмите ENTER')
