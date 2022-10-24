@@ -99,7 +99,7 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
 
 
 
-# print(*data_from, sep='\n')
+print(*data_from, sep='\n')
 
 # # закрываю файл из которого беру данные
 # wb_stat.close()
