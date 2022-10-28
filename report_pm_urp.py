@@ -83,16 +83,25 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
 
     counter_data = 0
     for wb_cells_for_data in wb_pm_urp_data.values():
-        print(f'{wb_cells_for_data[1] = }')
+        # print(f'{wb_cells_for_data[1] = }')
         # диапазон ячеек в файл заполнения
         cells_range_to = wb_cells_for_data[1]
 
         for row in wb_pm_urp_s[cells_range_to]:
-            print(f'{data_from[counter_data] = }')
+            # print(f'{data_from[counter_data] = }')
             counter_data += 1
 
-            for cell in row:
-                cell.value = 2
+
+            print(f'готово для прохода по двойному циклу {wb_cells_for_data[1] = } - {data_from[counter_data] = }')
+            wb_cells_range_from = wb_pm_urp_s[wb_cells_for_data[1]]
+            for row_in_range in wb_cells_range_from:
+                print(row_in_range)
+                # for cell_in_row in row_in_range:
+                #     indexR = wb_cells_range_from.index(row_in_range)
+                #     indexC = row_in_range.index(cell_in_row)
+                #     for data in data_from[counter_data]:
+                #         print(wb_cells_range_from[indexR][indexC], ' = ', data)
+
 
         print()
     print()
