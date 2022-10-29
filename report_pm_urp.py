@@ -10,6 +10,7 @@ file_pm_urp = 'Таблицы_ПМ_УРП (Разделы 2 и 3).xlsx'
 # лист откуда берутся данные и с каких ячеек, а потом куда кладутся
 dict_data = {
              'Раздел2': {  #    откуда      куда
+                      #  'B60:S60': ('7', 'B9:S9')
                          '7': ('B60:S60', 'B9:S9'),
                          '8': ('B60:S60', 'B10:S10'),
                          '9': ('B60:S60', 'B11:S11'),
@@ -71,13 +72,14 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
             data_from.append(temp_list)
             temp_list = []
 
-
+print(*data_from, sep='\n')
+exit()
 
 
 
 
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
-    print(f'{wb_pm_urp_sheet = }')
+    # print(f'{wb_pm_urp_sheet = }')
     # беру лист в файле с данными
     wb_pm_urp_s = wb_pm_urp[wb_pm_urp_sheet]
 
@@ -92,22 +94,37 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
             counter_data += 1
 
 
-            print(f'готово для прохода по двойному циклу {wb_cells_for_data[1] = } - {data_from[counter_data] = }')
-            wb_cells_range_from = wb_pm_urp_s[wb_cells_for_data[1]]
-            for row_in_range in wb_cells_range_from:
-                print(row_in_range)
+            wb_cells_range_from = wb_pm_urp_s[wb_cells_for_data[1]][0]
+            print(f'{wb_cells_range_from = }')
+            print(f'{data_from[counter_data] = }')
+            for cell in wb_cells_range_from:
+                print(len(wb_cells_range_from))
+                print(len(data_from[counter_data]))
+                for data in data_from[counter_data]:
+                    # print(cell, ' = ', data)
+                    pass
+
+
+
+
+
+
+
+
+
+
+
                 # for cell_in_row in row_in_range:
                 #     indexR = wb_cells_range_from.index(row_in_range)
                 #     indexC = row_in_range.index(cell_in_row)
                 #     for data in data_from[counter_data]:
                 #         print(wb_cells_range_from[indexR][indexC], ' = ', data)
 
-
         print()
     print()
 
 
-# print(*data_from, sep='\n')
+
 
 # закрываю файл из которого беру данные
 wb_stat.close()
