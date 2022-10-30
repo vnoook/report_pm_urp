@@ -42,7 +42,7 @@ wb_stat = openpyxl.load_workbook(file_stat)
 # заполняемый файл
 wb_pm_urp = openpyxl.load_workbook(file_pm_urp)
 
-# получение данных из файла источника
+# --- получение данных из файла источника
 # список для хранения данных из источника
 data_from = []
 # цикл прохода по разделам (листам) в заполняемом файле
@@ -68,8 +68,10 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         data_from.append(temp_list)
         temp_list = []
 
+print(data_from)
 # print(*data_from, sep='\n')
 
+# --- получение списка ячеек для записи
 # цикл прохода по разделам (листам) в заполняемом файле
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
     # беру лист в файле для записи
