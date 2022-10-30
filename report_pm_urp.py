@@ -68,10 +68,6 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         data_from.append(temp_list)
         temp_list = []
 
-print(len(data_from))
-print(*data_from, sep='\n')
-print()
-
 # --- получение списка ячеек для записи
 # список для хранения ячеек в которые нужно внести данные
 cells_to = []
@@ -84,13 +80,36 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         # диапазон ячеек в файл заполнения
         cells_range_to = wb_cells_for_data[1]
         # добавление кортежа в список ячеек
-        cells_to.append(list(wb_pm_urp_s[cells_range_to][0]))
+        cells_to.append(wb_pm_urp_s[cells_range_to][0])
+
+
+
+
+print(len(data_from))
+# print(*data_from, sep='\n')
+x = 1
+for datas in data_from:
+    print(x, ' ... ', len(datas), ' ... ', datas)
+    x += 1
+print()
 
 print(len(cells_to))
-print(*cells_to, sep='\n')
+# print(*cells_to, sep='\n')
+x = 1
+for cells in cells_to:
+    print(x, ' ... ', len(cells), ' ... ', cells)
+    x += 1
 print()
 
 
+
+
+
+# for cells in cells_to:
+#     for datas in data_from:
+#         print(f'{len(cells)} ... {cells = }')
+#         print(f'{len(datas)} ... {datas = }')
+#         print()
 
 
 
