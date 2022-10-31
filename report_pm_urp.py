@@ -44,10 +44,8 @@ wb_pm_urp = openpyxl.load_workbook(file_pm_urp)
 
 # цикл прохода по разделам (листам) в заполняемом файле
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
-    # print(wb_pm_urp_sheet)
     # цикл прохода по листам файла источника данных
     for wb_stat_sheet, wb_stat_data in wb_pm_urp_data.items():
-        # print('     ', wb_stat_sheet, ' ... ', wb_stat_data)
         # беру лист в файле с данными
         wb_stat_s = wb_stat[wb_stat_sheet]
         # беру лист в файле для заполнения
@@ -62,18 +60,12 @@ for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
         wb_cells_range_from = wb_stat_s[cells_range_from][0]
         # назначаю диапазон ячеек в файле источнике
         wb_cells_range_to = wb_pm_urp_s[cells_range_to][0]
-        # print(wb_cells_range_from)
-        # print(wb_cells_range_to)
 
         if len(wb_cells_range_from) == len(wb_cells_range_to):
             for ind in range(len(wb_cells_range_from)):
-                # print(wb_cells_range_to[ind], wb_cells_range_to[ind].value)
-                # print(wb_cells_range_from[ind], wb_cells_range_from[ind].value)
                 wb_cells_range_to[ind].value = wb_cells_range_from[ind].value
         else:
             print(f'В строке {wb_stat_sheet}: {wb_stat_data} не совпадают длины диапазонов!')
-
-        # print()
 
 # закрываю файл из которого беру данные
 wb_stat.close()
@@ -83,4 +75,4 @@ wb_pm_urp.save(file_pm_urp)
 wb_pm_urp.close()
 
 # # закрываю программу
-# input('Нажмите ENTER')
+input('Нажмите ENTER')
