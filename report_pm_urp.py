@@ -1,13 +1,13 @@
 import openpyxl
 
-# файлы для работы
+# --- файлы для работы
 # файл из статистики с данными
 file_stat = 'ПМ-09-2022-УРП.xlsx'
 # файл для заполнения
 file_pm_urp = 'Таблицы_ПМ_УРП (Разделы 2 и 3).xlsx'
 
-# словарь для хранения раздел куда вставляются данные
-# лист откуда берутся данные и с каких ячеек, а потом куда кладутся
+# словарь для хранения разделов куда вставляются данные,
+# листы откуда берутся данные и с каких ячеек, а потом куда кладутся
 dict_data = {
              'Раздел2': {  #    откуда      куда
                          '7': ('B60:S60',  'B9:S9'),
@@ -36,83 +36,44 @@ dict_data = {
                         }
             }
 
-# открываю файлы
+# --- открываю файлы
 # файл с данными
 wb_stat = openpyxl.load_workbook(file_stat)
 # заполняемый файл
 wb_pm_urp = openpyxl.load_workbook(file_pm_urp)
 
-# --- получение данных из файла источника
-# список для хранения данных из источника
-data_from = []
 # цикл прохода по разделам (листам) в заполняемом файле
 for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
+    # print(wb_pm_urp_sheet)
     # цикл прохода по листам файла источника данных
     for wb_stat_sheet, wb_stat_data in wb_pm_urp_data.items():
+        # print('     ', wb_stat_sheet, ' ... ', wb_stat_data)
         # беру лист в файле с данными
         wb_stat_s = wb_stat[wb_stat_sheet]
+        # беру лист в файле для заполнения
+        wb_pm_urp_s = wb_pm_urp[wb_pm_urp_sheet]
 
         # диапазон ячеек из файла статистики
         cells_range_from = wb_stat_data[0]
+        cells_range_to = wb_stat_data[1]
+        # print(wb_stat_sheet, cells_range_from, ' -> ', wb_pm_urp_sheet, cells_range_to)
 
         # назначаю диапазон ячеек в файле источнике
-        wb_cells_range_from = wb_stat_s[cells_range_from]
+        wb_cells_range_from = wb_stat_s[cells_range_from][0]
+        # назначаю диапазон ячеек в файле источнике
+        wb_cells_range_to = wb_pm_urp_s[cells_range_to][0]
+        # print(wb_cells_range_from)
+        # print(wb_cells_range_to)
 
-        # собираю информацию во временный список
-        temp_list = []
+        if len(wb_cells_range_from) == len(wb_cells_range_to):
+            for ind in range(len(wb_cells_range_from)):
+                # print(wb_cells_range_to[ind], wb_cells_range_to[ind].value)
+                # print(wb_cells_range_from[ind], wb_cells_range_from[ind].value)
+                wb_cells_range_to[ind].value = wb_cells_range_from[ind].value
+        else:
+            print(f'В строке {wb_stat_sheet}: {wb_stat_data} не совпадают длины диапазонов!')
 
-        # прохожу по диапазону ячеек в файле источнике
-        for cell in wb_cells_range_from[0]:
-            temp_list.append(cell.value)
-
-        data_from.append(temp_list)
-        temp_list = []
-
-# --- получение списка ячеек для записи
-# список для хранения ячеек в которые нужно внести данные
-cells_to = []
-# цикл прохода по разделам (листам) в заполняемом файле
-for wb_pm_urp_sheet, wb_pm_urp_data in dict_data.items():
-    # беру лист в файле для записи
-    wb_pm_urp_s = wb_pm_urp[wb_pm_urp_sheet]
-
-    for wb_cells_for_data in wb_pm_urp_data.values():
-        # диапазон ячеек в файл заполнения
-        cells_range_to = wb_cells_for_data[1]
-        # добавление кортежа в список ячеек
-        cells_to.append(wb_pm_urp_s[cells_range_to][0])
-
-
-
-
-print(len(data_from))
-# print(*data_from, sep='\n')
-x = 1
-for datas in data_from:
-    print(x, ' ... ', len(datas), ' ... ', datas)
-    x += 1
-print()
-
-print(len(cells_to))
-# print(*cells_to, sep='\n')
-x = 1
-for cells in cells_to:
-    print(x, ' ... ', len(cells), ' ... ', cells)
-    x += 1
-print()
-
-
-
-
-
-# for cells in cells_to:
-#     for datas in data_from:
-#         print(f'{len(cells)} ... {cells = }')
-#         print(f'{len(datas)} ... {datas = }')
-#         print()
-
-
-
+        # print()
 
 # закрываю файл из которого беру данные
 wb_stat.close()
